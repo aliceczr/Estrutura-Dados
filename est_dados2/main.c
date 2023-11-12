@@ -2,12 +2,23 @@
 #include <stdlib.h> 
 #include "matriz.h"
 
-int main(void){
-
+int main(void) {
     Matriz A, B, C, D;
 
-    A = leMatriz("arquivoA.txt");
-    B = leMatriz("arquivoB.txt");
+    FILE *fileA, *fileB;
+    fileA = fopen("matrizA.txt", "r");
+    fileB = fopen("matrizB.txt", "r");
+
+    if (fileA == NULL || fileB == NULL) {
+        printf("Erro ao abrir os arquivos de entrada.\n");
+        return 1;
+    }
+
+    A = leMatriz(fileA);
+    B = leMatriz(fileB);
+
+    fclose(fileA);
+    fclose(fileB);
 
     printf("Matriz A:\n");
     imprimeMatriz(A);
@@ -28,7 +39,5 @@ int main(void){
     imprimeMatriz(D);
     printf("\n");
 
-
     return 0;
-    
-    }
+}
