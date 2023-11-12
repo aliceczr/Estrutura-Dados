@@ -18,23 +18,25 @@ void insere(Matriz *A, int i, int j, float v){
     A->cabeca->abaixo = nova;
 }
 
-Matriz leMatriz(const char *nomeArquivo){
-    Matriz A;
-    FILE *file;
-    int m, n;
-    int i, j;
-    float valor;
+Matriz leMatriz(FILE *file){
+  Matriz A;
+  int m, n;  // Variáveis para armazenar as dimensões da matriz
+  int i, j;
+  float valor;
 
-    file = fopen(nomeArquivo, "r");
+  if (file == NULL) {
+      printf("Erro ao abrir o arquivo de entrada.\n");
+      exit(1);
+  }
 
-    if (file == NULL) {
-        printf("Erro ao abrir o arquivo de entrada: %s\n", nomeArquivo);
-        exit(1);
-    }
+  // Leia as dimensões da matriz do arquivo
+  if (fscanf(file, "%d, %d", &m, &n) != 2) {
+      printf("Erro ao ler as dimensões da matriz.\n");
+      exit(1);
+  }
 
-    fscanf(file, "%d, %d", &m, &n);
-    A.nlin = m;
-    A.ncol = n;
+  A.nlin = m;
+  A.ncol = n;
 
     A.cabeca = (Celula *)malloc(sizeof(Celula));
     A.cabeca->linha = -1;
@@ -46,9 +48,9 @@ Matriz leMatriz(const char *nomeArquivo){
         insere(&A, i, j, valor);
     }
 
-    fclose(file);
     return A;
 }
+
 
 void imprimeMatriz(Matriz A){
     Celula *linha_atual = A.cabeca->abaixo;
@@ -67,7 +69,7 @@ void imprimeMatriz(Matriz A){
     }
 }
 
-Matriz somaMatrizes(Matriz A, Matriz B){
+Matriz somaMatrizes(Matriz A, Matriz B) {
     if (A.nlin != B.nlin || A.ncol != B.ncol) {
         printf("As matrizes não têm as mesmas dimensões. A soma não é possível.\n");
         exit(1);
@@ -84,10 +86,10 @@ Matriz somaMatrizes(Matriz A, Matriz B){
     C.cabeca->direita = C.cabeca;
     C.cabeca->abaixo = C.cabeca;
 
-    Celula *celulaA = A.cabeca->abaixo->direita;
-    Celula *celulaB = B.cabeca->abaixo->direita;
+    Celula *celulaA = (A.cabeca != NULL) ? A.cabeca->abaixo->direita : NULL;
+    Celula *celulaB = (B.cabeca != NULL) ? B.cabeca->abaixo->direita : NULL;
 
-    while (celulaA != A.cabeca || celulaB != B.cabeca) {
+    while (celulaA != A.cabeca && celulaB != B.cabeca) {
         int linhaA = (celulaA != A.cabeca) ? celulaA->linha : A.nlin;
         int colunaA = (celulaA != A.cabeca) ? celulaA->coluna : A.ncol;
         float valorA = (celulaA != A.cabeca) ? celulaA->valor : 0.0;
@@ -103,7 +105,7 @@ Matriz somaMatrizes(Matriz A, Matriz B){
             }
             celulaA = celulaA->direita;
             celulaB = celulaB->direita;
-        } else if ((linhaA < linhaB) || (linhaA == linhaB && colunaA < colunaB)) {
+        } else if (linhaA < linhaB || (linhaA == linhaB && colunaA < colunaB)) {
             insere(&C, linhaA, colunaA, valorA);
             celulaA = celulaA->direita;
         } else {
@@ -114,6 +116,8 @@ Matriz somaMatrizes(Matriz A, Matriz B){
 
     return C;
 }
+
+
 
 
 Matriz multiplicaMatrizes(Matriz A, Matriz B){
@@ -169,3 +173,5 @@ Matriz multiplicaMatrizes(Matriz A, Matriz B){
 
     return C;
 }
+
+
