@@ -6,8 +6,8 @@ int main(void) {
     Matriz A, B, C, D;
 
     FILE *fileA, *fileB;
-    fileA = fopen("matrizA.txt", "r");
-    fileB = fopen("matrizB.txt", "r");
+    fileA = fopen("arquivoA.txt", "r");
+    fileB = fopen("arquivoB.txt", "r");
 
     if (fileA == NULL || fileB == NULL) {
         printf("Erro ao abrir os arquivos de entrada.\n");
