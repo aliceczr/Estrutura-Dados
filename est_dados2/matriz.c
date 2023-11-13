@@ -3,24 +3,24 @@
 #include "matriz.h"
 
 void insere(Matriz *A, int i, int j, float v){
-    // Implemente a inserção de uma célula na matriz A
+    
     Celula *nova = (Celula *)malloc(sizeof(Celula));
     nova->linha = i;
     nova->coluna = j;
     nova->valor = v;
 
-    // Inserir a célula na lista da linha i
+    
     nova->direita = A->cabeca->direita;
     A->cabeca->direita = nova;
 
-    // Inserir a célula na lista da coluna j
+    
     nova->abaixo = A->cabeca->abaixo;
     A->cabeca->abaixo = nova;
 }
 
 Matriz leMatriz(FILE *file){
   Matriz A;
-  int m, n;  // Variáveis para armazenar as dimensões da matriz
+  int m, n;  
   int i, j;
   float valor;
 
