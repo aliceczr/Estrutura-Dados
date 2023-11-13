@@ -16,7 +16,7 @@ typedef struct Matriz {
 
 
 void inicializaMatriz(struct Matriz* matriz, int nlin, int ncol);
-void insereCelula(ListaDuplamenteEncadeada *lista, int linha, int coluna, float valor);
+void insere(Matriz *A, int i, int j, float v);
 Matriz leMatriz(FILE *file);
 void imprimeMatriz(Matriz A);
 Matriz somaMatrizes(Matriz A, Matriz B);
