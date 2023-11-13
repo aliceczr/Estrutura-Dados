@@ -13,11 +13,6 @@ typedef struct Matriz {
     int nlin, ncol;
 } Matriz;
 
-typedef struct ListaDuplamenteEncadeada {
-    Celula* cabeca;
-    int linha;
-    int coluna;
-} ListaDuplamenteEncadeada;
 
 
 void inicializaMatriz(struct Matriz* matriz, int nlin, int ncol);
